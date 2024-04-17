@@ -23,19 +23,22 @@ const rows = (data) => {
 };
 
 const triParDate = (data) => {
-    console.log(data);
-    return data.sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
+    if (data && data.length) {
+        return data.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
 
-        if (dateA > dateB) {
-            return -1;
-        }
+            if (dateA > dateB) {
+                return -1;
+            }
 
-        if (dateA < dateB) {
-            return 1;
-        }
-    });
+            if (dateA < dateB) {
+                return 1;
+            }
+        });
+    } else {
+        return data;
+    }
 };
 
 export default ({ data: bills, loading, error }) => {
