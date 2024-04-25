@@ -43,25 +43,17 @@ describe("Given I am connected as an employee", () => {
     });
     describe("When i am on Bills page and i click on new bill", () => {
         test("then it should open new bill page", () => {
-            Object.defineProperty(window, "localStorage", { value: localStorageMock });
-            window.localStorage.setItem(
-                "user",
-                JSON.stringify({
-                    type: "Employee",
-                })
-            );
             const root = document.createElement("div");
             root.setAttribute("id", "root");
             document.body.append(root);
             router();
             window.onNavigate(ROUTES_PATH.Bills);
 
-            const store = null;
-            const billsList = new Bills({ document, onNavigate, store, localStorage: window.localStorage });
+            const bills = new Bills({ document, onNavigate, store: null, localStorage: {} });
 
-            const newBill = jest.fn(() => billsList.handleClickNewBill);
+            //const newBill = jest.fn(() => bills.handleClickNewBill);
             const navigationButton = screen.getByTestId("btn-new-bill");
-            navigationButton.addEventListener("click", newBill);
+            // navigationButton.addEventListener("click", bills.handleClickNewBill);
             fireEvent.click(navigationButton);
             expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy();
         });
