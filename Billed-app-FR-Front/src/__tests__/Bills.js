@@ -5,7 +5,7 @@
 import { screen, waitFor, fireEvent } from "@testing-library/dom";
 import BillsUI from "../views/BillsUI.js";
 import { bills } from "../fixtures/bills.js";
-import { ROUTES_PATH } from "../constants/routes.js";
+import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import Bills from "../containers/Bills.js";
 
@@ -56,6 +56,34 @@ describe("Given I am connected as an employee", () => {
             // navigationButton.addEventListener("click", bills.handleClickNewBill);
             fireEvent.click(navigationButton);
             expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy();
+        });
+    });
+    describe("When i am on bills page and i click on eye icon", () => {
+        test("Then the should be display", () => {
+            const html = BillsUI({
+                data: bills,
+            });
+            document.body.innerHTML = html;
+            const onNavigate = (pathname) => {
+                document.body.innerHTML = ROUTES({ pathname });
+            };
+            const billslist = new Bills({ document, onNavigate, store: null, localStorage: {} });
+
+            $.fn.modal = jest.fn();
+
+            const iconEye = screen.getAllByTestId("icon-eye")[0];
+
+            const handleClickIconEye = jest.fn(() => billslist.handleClickIconEye(iconEye));
+
+            iconEye.addEventListener("click", handleClickIconEye);
+
+            fireEvent.click(iconEye);
+
+            expect(handleClickIconEye).toHaveBeenCalled();
+
+            const modale = document.getElementById("modaleFile");
+
+            expect(modale).toBeTruthy();
         });
     });
 });
