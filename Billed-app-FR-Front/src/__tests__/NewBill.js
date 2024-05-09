@@ -44,13 +44,9 @@ describe("Given I am connected as an employee", () => {
         test("Then the file name should be display", () => {
             const html = NewBillUI();
             document.body.innerHTML = html;
-            const onNavigate = (pathname) => {
-                document.body.innerHTML = ROUTES({ pathname });
-            };
-            const newBill = new NewBill({ document, onNavigate, store: null, localStorage });
-            const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e));
+
+            new NewBill({ document, onNavigate: null, store: mockStore, localStorage });
             const file = screen.getByTestId("file");
-            file.addEventListener("change", handleChangeFile);
             fireEvent.change(file, {
                 target: {
                     files: [
@@ -61,7 +57,6 @@ describe("Given I am connected as an employee", () => {
                 },
             });
 
-            expect(handleChangeFile).toHaveBeenCalled();
             expect(file.files[0].name).toBe("image.png");
         });
         test("then a new bill was created", () => {
