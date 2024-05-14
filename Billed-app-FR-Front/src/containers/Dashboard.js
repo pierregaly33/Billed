@@ -5,7 +5,7 @@ import { ROUTES_PATH } from "../constants/routes.js";
 import USERS_TEST from "../constants/usersTest.js";
 import Logout from "./Logout.js";
 
-export const filterBills = (data, status) => {
+export const filteredBills = (data, status) => {
     return data && data.length
         ? data.filter((bill) => {
               let selectCondition;
@@ -132,11 +132,11 @@ export default class {
         if (this.counter === undefined || this.index !== index) this.counter = 0;
         if (this.index === undefined || this.index !== index) this.index = index;
         if (this.counter % 2 === 0) {
-            let filteredBills = filterBills(bills, getStatus(this.index));
+            let filtered_Bills = filteredBills(bills, getStatus(this.index));
             $(`#arrow-icon${this.index}`).css({ transform: "rotate(0deg)" });
-            $(`#status-bills-container${this.index}`).html(cards(filteredBills));
+            $(`#status-bills-container${this.index}`).html(cards(filtered_Bills));
             this.counter++;
-            filteredBills.forEach((bill) => {
+            filtered_Bills.forEach((bill) => {
                 $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills));
             });
         } else {
