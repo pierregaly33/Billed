@@ -52,11 +52,7 @@ describe("Given I am connected as an employee", () => {
             router();
             window.onNavigate(ROUTES_PATH.Bills);
 
-            const bills = new Bills({ document, onNavigate, store: null, localStorage: {} });
-
-            //const newBill = jest.fn(() => bills.handleClickNewBill);
             const navigationButton = screen.getByTestId("btn-new-bill");
-            // navigationButton.addEventListener("click", bills.handleClickNewBill);
             fireEvent.click(navigationButton);
             expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy();
         });
